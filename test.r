@@ -3,7 +3,7 @@ library(datashieldclient)
 load("logindata4test.rda")
 
 # TODO LAB_GLUC_ADJUSTED does not exist
-opals <- datashield.login(logindata, symbol="D", variables=list("GENDER","PM_BMI_CATEGORIAL","PM_BMI_CONTINUOUS","DIS_CVA", "DIS_AMI", "DIS_DIAB", "MEDI_LPD","LAB_TSC","LAB_TRIG","LAB_HDL","LAB_GLUC_ADJUSTED"))
+opals <- datashield.login(logindata, assign=TRUE, variables=list("GENDER","PM_BMI_CATEGORIAL","PM_BMI_CONTINUOUS","DIS_CVA", "DIS_AMI", "DIS_DIAB", "MEDI_LPD","LAB_TSC","LAB_TRIG","LAB_HDL","LAB_GLUC_ADJUSTED"))
 
 # DISPLAY SUMMARY OF THE ASSIGNED DATA FRAMES
 datashield.aggregate(opals, quote(summary.ds(D)))
