@@ -9,9 +9,9 @@ opals <- datashield.login(logindata, assign=TRUE, variables=list("GENDER","PM_BM
 datashield.aggregate(opals, quote(summary.ds(D)))
 
 # DISPLAY AVAILABLE AGGREGATE METHODS
-dsadmin.get_methods(opals, type="aggregate")
+datashield.methods(opals, type="aggregate")
 # DISPLAY AVAILABLE ASSIGNMENT METHODS
-dsadmin.get_methods(opals, type="assign")
+datashield.methods(opals, type="assign")
 
 #LOOK AT UNIVARIATE DISTRIBUTION IN MORE DETAIL
 ds.table1d(opals, quote(D$DIS_CVA))
