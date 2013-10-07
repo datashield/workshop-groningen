@@ -12,6 +12,9 @@ myvar <- list("DIS_CVA","MEDI_LPD","DIS_DIAB","DIS_AMI","GENDER","PM_BMI_CATEGOR
 # run the command to login and assign data 
 opals <- datashield.login(logins=logindata, assign=TRUE, variables=myvar)
 
+datashield.aggregate(opals, "summary.ds(D)")
+datashield.aggregate(opals, "summary.ds(D$PM_BMI_CONTINUOUS)")
+datashield.aggregate(opals, "summary.ds(D$PM_BMI_CATEGORIAL)")
 
 # LOOK AT UNIVARIATE DISTRIBUTION IN MORE DETAIL
 
