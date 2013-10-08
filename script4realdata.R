@@ -1,11 +1,9 @@
 # LOAD REQUIRED LIBRARIES
-library(opal)
-library(dsbaseclient)
-library(dsmodellingclient)
+library(datashieldclient)
 
 
 # LOAD THE TABLE THAT CONTAINS THE LOGIN INFO
-load("~/login4realdata.rda")
+load("logindata4test.rda")
 
 
 # LOGIN TO COLLABORATING SERVERS AND ASSIGN DATA
@@ -14,7 +12,7 @@ myvar <- list("DIS_CVA","MEDI_LPD","DIS_DIAB","DIS_AMI","GENDER","PM_BMI_CATEGOR
               "LAB_TSC","LAB_HDL","LAB_GLUC_FASTING","PM_BMI_CONTINUOUS")
 
 # run the command to login and assign data 
-opals <- datashield.login(logins=login4realdata, assign=TRUE, variables=myvar)
+opals <- datashield.login(logins=logindata, assign=TRUE, variables=myvar)
 
 
 # LOOK AT UNIVARIATE DISTRIBUTION IN MORE DETAIL
