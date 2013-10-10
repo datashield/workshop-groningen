@@ -3,7 +3,7 @@ library(datashieldclient)
 
 
 # LOAD THE TABLE THAT CONTAINS THE LOGIN INFO
-load("logindata4test.rda")
+load("logindata4bioshare.rda")
 
 
 # LOGIN TO COLLABORATING SERVERS AND ASSIGN DATA
@@ -11,8 +11,9 @@ load("logindata4test.rda")
 myvar <- list("DIS_CVA","MEDI_LPD","DIS_DIAB","DIS_AMI","GENDER","PM_BMI_CATEGORIAL",
               "LAB_TSC","LAB_HDL","LAB_GLUC_FASTING","PM_BMI_CONTINUOUS")
 
-# run the command to login and assign data 
-opals <- datashield.login(logins=logindata, assign=TRUE, variables=myvar)
+# run the command to login and assign data
+ld <- subset(logindata, server != "hunt")
+opals <- datashield.login(logins=ld, assign=TRUE, variables=myvar)
 
 
 # LOOK AT UNIVARIATE DISTRIBUTION IN MORE DETAIL
