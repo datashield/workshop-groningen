@@ -54,14 +54,11 @@ q11 <- ds.t.test(datasources=opals, x=quote(D$LAB_TSC), y=quote(D$LAB_HDL))
 
 # Question 2
 # to explore the relationship between 'LAB_GLUC_FASTING' and 'PM_BMI_CATEGORIAL'
-# make sure the variable 'PM_BMI_CATEGORIAL' is used as a factor/categorical variable
-ds.createfactor(datasources=opals, xvect=quote(D$PM_BMI_CATEGORIAL), newvarname="bmi.f")
-
-# now let us tabulate the factor variable
-ds.table1d(datasources=opals, xvect=quote(bmi.f))    
+# let us tabulate the factor variable
+ds.table1d(datasources=opals, xvect=quote(D$PM_BMI_CATEGORIAL))    
 
 # use the glm function the explore the relationship
-glm.mod2 <- ds.glm(datasources=opals, formula=D$LAB_GLUC_FASTING ~ bmi.f, family=quote(gaussian), maxit=quote(20))
+glm.mod2 <- ds.glm(datasources=opals, formula=D$LAB_GLUC_FASTING ~ D$PM_BMI_CATEGORIAL, family=quote(gaussian), maxit=quote(20))
 # display a summary of the results
 glm.mod2
 
@@ -102,17 +99,14 @@ glm.mod4
 # So the type of glm function we need to answer research question 5 is the one which has family input “binomial”.  
 
 # first let us tabulate the two variables
-ds.table2d(datasources=opals, xvect=quote(D$DIS_DIAB), yvect=quote(bmi.f))
+ds.table2d(datasources=opals, xvect=quote(D$DIS_DIAB), yvect=quote(D$PM_BMI_CATEGORIAL))
 
 # now run glm to predict diabetes status using categorical bmi
-glm.mod5_1 <- ds.glm(datasources=opals, formula=D$DIS_DIAB ~ bmi.f, family=quote(binomial), maxit=quote(20))
+glm.mod5_1 <- ds.glm(datasources=opals, formula=D$DIS_DIAB ~ D$PM_BMI_CATEGORIAL, family=quote(binomial), maxit=quote(20))
 glm.mod5_1
 
-# create a factor from the 'GENDER' variable and name the new variable 'gender.f'
-ds.createfactor(datasources=opals, xvect=quote(D$GENDER), newvarname="gender.f")
-
 # run glm to predict diabestes using gender, continuous bmi and hdl cholesterol
-glm.mod5_2 <- ds.glm(datasources=opals, formula=D$DIS_DIAB~gender.f+D$PM_BMI_CONTINUOUS+D$LAB_HDL, family=quote(binomial), maxit=quote(20))
+glm.mod5_2 <- ds.glm(datasources=opals, formula=D$DIS_DIAB~D$GENDER+D$PM_BMI_CONTINUOUS+D$LAB_HDL, family=quote(binomial), maxit=quote(20))
 glm.mod5_2
 
 
@@ -120,7 +114,7 @@ glm.mod5_2
 # To determine predictors of taking lipid reducing medications
 # For example, a logistic regression can, again, be used to determine whether
 # some HOP variables are significantly associated with a taking lipid reducing medications, MEDI_LPD. 
-glm.mod6_1 <- ds.glm(datasources=opals, formula=D$MEDI_LPD~gender.f*D$LAB_HDL+D$PM_BMI_CONTINUOUS+D$LAB_TSC, family=quote(binomial), maxit=quote(20))
+glm.mod6_1 <- ds.glm(datasources=opals, formula=D$MEDI_LPD~D$GENDER*D$LAB_HDL+D$PM_BMI_CONTINUOUS+D$LAB_TSC, family=quote(binomial), maxit=quote(20))
 glm.mod6_1
 
 # quantile of the variable 'LAB_HDL'
@@ -129,6 +123,7 @@ ds.quantilemean(datasources=opals, xvect=quote(D$LAB_HDL))
 datashield.assign(opals, 'HDL.1.5', quote(D$LAB_HDL-1.5))
 
 # run another glm analysis using the above adjusted hdl variable
-glm.mod6_2 <- ds.glm(datasources=opals, formula=D$MEDI_LPD~gender.f*HDL.1.5+D$PM_BMI_CONTINUOUS+D$LAB_TSC, family=quote(binomial), maxit=quote(20))
+glm.mod6_2 <- ds.glm(datasources=opals, formula=D$MEDI_LPD~D$GENDER*HDL.1.5+D$PM_BMI_CONTINUOUS+D$LAB_TSC, family=quote(binomial), maxit=quote(20))
 glm.mod6_2
 
+datashield.logout(opals)
